@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashbord{% endblock %}
+
+{% block body %}
+<style>
+
+    .example-wrapper { max-width: 500px; width: 100%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper mb-5">
+<h3 class="text-left">User info</h3>
+
+    {{ form(form) }}
+</div>
+
+<div class="col-md-12 mt-5">
+    <table class="table table-striped">
+        <thead>
+
+                <th class="table-primary">Passsengers</th>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Passport ID</th>
+                        <th scope="col">Options</th>
+
+                    </tr>
+        </thead>
+        <tbody>
+            {% for passenger in passengers %}
+                <tr>
+                    <th scope="row">{{ passenger.title }}</th>
+                    <td>{{ passenger.surname }}</td>
+                    <td>{{ passenger.FirstName }}</td>
+                    <td>{{ passenger.PassportId }}</td>
+                    <td>
+                    <a href="{{ path('edit_passenger',{ 'passenger':passenger.id }) }}" class="badge badge-primary">Edit</a>
+                    <a href="{{ path('remove_passenger',{ 'passenger':passenger.id }) }}" class="badge badge-danger">Remove</a>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-block text-right">
+        <a href="{{ path('add_passenger') }}" class="btn btn-success">Add new passenger</a>
+    </div>
+</div>
+
+<br>
+<div class="col-md-12 mt-5">
+    <table class="table table-striped">
+        <thead>
+
+                <th class="table-primary">Trips</th>
+
+            <tr>
+
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Arrival</th>
+                <th scope="col">Passengers</th>
+                <th scope="col">Options</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for trip in trips %}
+                <tr>
+                    <th scope="row">{{ trip.FlyFrom }}</th>
+                    <th scope="row">{{ trip.FlyTo }}</th>
+                    <th scope="row">{{ trip.DepartTime }}</th>
+                    <th scope="row">{{ trip.ArrivalTime }}</th>
+                    <th scope="row">
+                    {% for pass in trip.pass %}
+                       {{loop.index}} - {{ pass.surname }} {{ pass.firstName }} </br>
+                    {% endfor %}
+                    </th>
+
+        <th> <a href="{{  path('remove_trip', { 'trips': trip.id }) }}" class="badge badge-danger">Remove</a> </th>
+                    <td>
+
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-block text-right mb-5">
+        <a href="{{ path('add_trip') }}" class="btn btn-success">Add new trip</a>
+    </div>
+</div>
+{% endblock %}
